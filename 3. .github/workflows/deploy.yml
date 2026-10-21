@@ -1,0 +1,27 @@
+name: Deploy to Neocities
+
+# Trigger the workflow every time you push code to the 'main' branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Download a copy of your code inside the runner
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Push the folder contents to Neocities
+      - name: Deploy to Neocities
+        uses: bcomnes/deploy-to-neocities@v3
+        with:
+          api_token: ${{ secrets.NEOCITIES_API_TOKEN }}
+          # Set this to '.' if your HTML files are in the main folder.
+          # Change to 'public' or 'dist' if you keep them in a subfolder.
+          dist_dir: '.'
+          # Set to true if you want files deleted from GitHub to also be deleted from Neocities
+          cleanup: false 
